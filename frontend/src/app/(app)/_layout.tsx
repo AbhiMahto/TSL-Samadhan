@@ -1,8 +1,27 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
+import { Tabs, Redirect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuthStore } from '../../store/authStore';
 
 export default function AppLayout() {
+  const { user, isAuthenticated } = useAuthStore();
+
+  if (!isAuthenticated) {
+    return <Redirect href="/(auth)/login" />;
+  }
+
+  if (user?.role !== 'employee') {
+    if (user?.role === 'admin') {
+      return <Redirect href="/(admin)/upload-excel" />;
+    } else if (user?.role === 'approver') {
+      return <Redirect href="/(approver)/dashboard" />;
+    } else if (user?.role === 'ibmd') {
+      return <Redirect href="/(ibmd)/dashboard" />;
+    } else if (user?.role === 'sales') {
+      return <Redirect href="/(sales)/dashboard" />;
+    }
+  }
+
   return (
     <Tabs
       screenOptions={{
@@ -41,16 +60,6 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
-        name="attendance-placeholder"
-        options={{
-          title: 'Attendance',
-          tabBarLabel: 'Attendance',
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'calendar' : 'calendar-outline'} size={22} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="notifications"
         options={{
           title: 'Notifications',
@@ -83,3 +92,4 @@ export default function AppLayout() {
     </Tabs>
   );
 }
+

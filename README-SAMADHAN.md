@@ -82,3 +82,22 @@ Follow these steps in order to get the project running locally.
     npx expo start
     ```
 6.  Connect your phone to the **same Wi-Fi network** as your PC, scan the QR code using your phone camera (iOS) or Expo Go app (Android), and enjoy!
+
+---
+
+## 📝 Project Report & Thesis Documentation
+
+If you are writing an academic project report, thesis, or technical audit document for this project, a comprehensive documentation template is available in the root folder:
+👉 **[REPORT_DOCUMENTATION.md](file:///Volumes/CODES/Samadhan_Copy/REPORT_DOCUMENTATION.md)**
+
+### What is covered in the Report Documentation?
+1. **Executive Summary / Abstract**: High-level problem statement and solution overview.
+2. **System Requirement Specification (SRS)**: Hardware/Software specifications, and Functional & Non-Functional requirements.
+3. **System Architecture**: Decentralized Client-Server block diagram and workflow State Machine diagram (in Mermaid notation).
+4. **Database Schema Reference**: Full schema mapping for MongoDB Atlas (Employee, Request, Location, Division, Department collections).
+5. **REST API Documentation**: Complete description of auth and workflow API endpoints, request payloads, and response patterns.
+6. **Core Implementation Snippets**: Security JWT validation middleware and bulk Excel parsing script structures.
+7. **Test Cases Matrix**: Detailed validation suites and expected outcomes for each application workflow step.
+8. **Future Scope**: Implementation strategies for QR Codes, push notifications, and PDF exports.
+
+You can copy and adapt sections directly from the report guide to fast-track your report writing process.

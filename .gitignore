@@ -6,10 +6,13 @@ frontend/node_modules/
 # Environment and sensitive configuration files
 .env
 .env.*
+!.env.example
 backend/.env
 backend/.env.*
+!backend/.env.example
 frontend/.env
 frontend/.env.*
+!frontend/.env.example
 *.pem
 *.key
 
@@ -38,6 +41,8 @@ yarn-error.log*
 .metro-health-check*
 *.tsbuildinfo
 
-# Ignore README.md
-README.md
+# README files to ignore
+README-SAMADHAN.md
+README_PPT.md
+REPORT_DOCUMENTATION.md
 

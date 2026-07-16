@@ -32,15 +32,29 @@ export default function RootLayout() {
     } else {
       // If authenticated
       if (inAuthGroup || segs.length === 0 || segs[0] === 'index' || segs[0] === 'explore') {
-        // Redirect to admin upload screen if admin, otherwise to employee dashboard
+        // Redirect to appropriate landing page based on role
         if (user?.role === 'admin') {
           router.replace('/(admin)/upload-excel');
+        } else if (user?.role === 'approver') {
+          router.replace('/(approver)/dashboard');
+        } else if (user?.role === 'ibmd') {
+          router.replace('/(ibmd)/dashboard');
+        } else if (user?.role === 'sales') {
+          router.replace('/(sales)/dashboard');
         } else {
           router.replace('/(app)/dashboard');
         }
       } else if (inAdminGroup && user?.role !== 'admin') {
-        // Prevent regular employees from accessing admin pages
-        router.replace('/(app)/dashboard');
+        // Prevent unauthorized roles from accessing admin pages
+        if (user?.role === 'approver') {
+          router.replace('/(approver)/dashboard');
+        } else if (user?.role === 'ibmd') {
+          router.replace('/(ibmd)/dashboard');
+        } else if (user?.role === 'sales') {
+          router.replace('/(sales)/dashboard');
+        } else {
+          router.replace('/(app)/dashboard');
+        }
       }
     }
   }, [isAuthenticated, isLoading, segments, user, router]);

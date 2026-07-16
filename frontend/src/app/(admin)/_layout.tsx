@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
-import { Stack, useRouter } from 'expo-router';
+import React from 'react';
+import { Stack, Redirect } from 'expo-router';
+import { TouchableOpacity, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useAuthStore } from '../../store/authStore';
 
 export default function AdminLayout() {
-  const { user, isAuthenticated } = useAuthStore();
-  const router = useRouter();
+  const { user, isAuthenticated, logout } = useAuthStore();
 
-  // Route security: Ensure user is logged in and has an Admin role
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace('/(auth)/login');
-    } else if (user?.role !== 'admin') {
-      router.replace('/(app)/dashboard');
-    }
-  }, [user, isAuthenticated, router]);
+  if (!isAuthenticated) {
+    return <Redirect href="/(auth)/login" />;
+  }
 
   if (user?.role !== 'admin') {
-    return null;
+    return <Redirect href="/(app)/dashboard" />;
   }
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <Stack
@@ -30,6 +30,16 @@ export default function AdminLayout() {
           fontWeight: 'bold',
         },
         headerShadowVisible: true,
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={handleLogout}
+            className="flex-row items-center mr-2 px-2.5 py-1.5 rounded-lg active:bg-zinc-100"
+            activeOpacity={0.7}
+          >
+            <Ionicons name="log-out-outline" size={18} color="#ef4444" className="mr-1" />
+            <Text className="text-red-500 font-semibold text-sm">Logout</Text>
+          </TouchableOpacity>
+        ),
       }}
     >
       <Stack.Screen
@@ -53,3 +63,4 @@ export default function AdminLayout() {
     </Stack>
   );
 }
+
